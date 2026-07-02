@@ -24,7 +24,7 @@ let codeVerifier     = null;
 
 // ── Spotify OAuth constants ───────────────────────────────────────────────────
 const REDIRECT_PORT = 8888;
-const REDIRECT_URI  = `http://localhost:${REDIRECT_PORT}/callback`;
+const REDIRECT_URI  = `http://127.0.0.1:${REDIRECT_PORT}/callback`;
 const SCOPES        = [
   'user-read-playback-state',
   'user-read-currently-playing',
@@ -96,14 +96,20 @@ function spotifyRequest(method, apiPath, body, token) {
       hostname: 'api.spotify.com',
       path: apiPath,
       method,
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      headers: {
+        'Authorization':   `Bearer ${token}`,
+        'Content-Type':    'application/json',
+        'Accept-Encoding': 'identity'
+      }
     };
     const req = https.request(opts, (res) => {
       let raw = '';
       res.on('data', d => { raw += d; });
       res.on('end', () => {
         if (res.statusCode >= 400) return reject({ status: res.statusCode, raw });
-        resolve({ status: res.statusCode, body: raw ? JSON.parse(raw) : null });
+        let body = null;
+        if (raw) { try { body = JSON.parse(raw); } catch { body = null; } }
+        resolve({ status: res.statusCode, body });
       });
     });
     req.on('error', reject);
@@ -313,16 +319,29 @@ async function handleCommand(action, data) {
   }
 }
 
+// ── Window positioning ────────────────────────────────────────────────────────
+function repositionWindow(pos) {
+  if (!mainWindow) return;
+  const { x: wx, y: wy, width: ww, height: wh } = screen.getPrimaryDisplay().workArea;
+  const { width: W, height: H } = mainWindow.getBounds();
+  const x = wx + Math.round((ww - W) / 2);
+  const y = pos === 'bottom' ? wy + wh - H : wy;
+  mainWindow.setPosition(x, y);
+}
+
 // ── Main window ───────────────────────────────────────────────────────────────
 function createWindow() {
-  const { width: sw } = screen.getPrimaryDisplay().bounds;
-  const W = 460, H = 160;
+  const { x: wx, y: wy, width: ww, height: wh } = screen.getPrimaryDisplay().workArea;
+  const W = 460, H = 220;
+  const savedPos = store.get('windowPosition') || 'top';
+  const x = wx + Math.round((ww - W) / 2);
+  const y = savedPos === 'bottom' ? wy + wh - H : wy;
 
   mainWindow = new BrowserWindow({
     width:           W,
     height:          H,
-    x:               Math.round((sw - W) / 2),
-    y:               0,
+    x,
+    y,
     frame:           false,
     transparent:     true,
     alwaysOnTop:     true,
@@ -393,6 +412,15 @@ function registerIPC() {
   });
 
   ipcMain.on('start-auth', startAuth);
+
+  ipcMain.on('quit-app',   () => app.quit());
+  ipcMain.on('open-guide', () => shell.openPath(path.join(__dirname, 'guide', 'index.html')));
+
+  ipcMain.handle('get-position', () => store.get('windowPosition') || 'top');
+  ipcMain.on('set-position', (_, pos) => {
+    store.set('windowPosition', pos);
+    repositionWindow(pos);
+  });
 }
 
 // ── App lifecycle ─────────────────────────────────────────────────────────────

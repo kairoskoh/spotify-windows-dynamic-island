@@ -20,5 +20,11 @@ contextBridge.exposeInMainWorld('spotify', {
   command:      (action, d)  => ipcRenderer.send('spotify-command', action, d),
 
   // Window mouse-event passthrough control
-  setIgnoreMouse: (ignore, opts) => ipcRenderer.send('set-ignore-mouse', ignore, opts)
+  setIgnoreMouse: (ignore, opts) => ipcRenderer.send('set-ignore-mouse', ignore, opts),
+
+  // App-level actions
+  quitApp:     ()    => ipcRenderer.send('quit-app'),
+  openGuide:   ()    => ipcRenderer.send('open-guide'),
+  setPosition: (pos) => ipcRenderer.send('set-position', pos),
+  getPosition: ()    => ipcRenderer.invoke('get-position')
 });

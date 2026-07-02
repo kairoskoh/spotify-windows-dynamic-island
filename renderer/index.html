@@ -33,6 +33,50 @@
          ════════════════════════════════════════════════ -->
     <div class="layer-expanded">
 
+      <!-- ── Top toolbar ── -->
+      <div class="island-toolbar">
+        <button class="toolbar-btn" id="btn-menu" title="Settings">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
+            <circle cx="3"  cy="8" r="1.5"/>
+            <circle cx="8"  cy="8" r="1.5"/>
+            <circle cx="13" cy="8" r="1.5"/>
+          </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-quit" title="Quit">
+          <svg viewBox="0 0 16 16" width="11" height="11">
+            <line x1="2" y1="2" x2="14" y2="14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="14" y1="2" x2="2"  y2="14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ── Settings dropdown ── -->
+      <div id="menu-dropdown" class="menu-dropdown hidden">
+        <button class="menu-item" id="menu-change-id">
+          Change Client ID
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 2.5l2.5 2.5L5 13.5H2.5V11L11 2.5z"/>
+          </svg>
+        </button>
+        <div class="menu-pos-row">
+          <span class="menu-pos-label">Position</span>
+          <div class="toggle-switch" id="position-toggle">
+            <span class="toggle-icon">↑</span>
+            <div class="toggle-track"><div class="toggle-knob"></div></div>
+            <span class="toggle-icon">↓</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Quit confirm overlay ── -->
+      <div id="quit-overlay" class="quit-overlay hidden">
+        <div class="quit-title">Quit Dynamic Island?</div>
+        <div class="quit-actions">
+          <button id="btn-quit-confirm" class="quit-action-btn quit-confirm">Quit</button>
+          <button id="btn-quit-cancel"  class="quit-action-btn quit-cancel">Cancel</button>
+        </div>
+      </div>
+
       <!-- ── Player panel ── -->
       <div id="player-panel" class="player-panel">
         <img id="album-art" class="album-art" src="" alt="">
@@ -83,6 +127,11 @@
 
       <!-- ── Setup panel ── -->
       <div id="setup-panel" class="setup-panel hidden">
+        <button class="toolbar-btn back-btn" id="btn-back" title="Back" style="display:none">
+          <svg viewBox="0 0 16 16" width="12" height="12">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </button>
         <div class="setup-inner">
           <svg class="spotify-logo" viewBox="0 0 24 24" fill="#1DB954" width="30" height="30">
             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12
@@ -100,7 +149,7 @@
           <input id="client-id-input" class="setup-input" type="text"
                  placeholder="Client ID" spellcheck="false" autocomplete="off">
           <button id="btn-connect" class="setup-btn">Connect</button>
-          <button id="btn-dashboard" class="setup-link">Get a Client ID at developer.spotify.com ↗</button>
+          <button id="btn-dashboard" class="setup-link">How to get a Client ID ↗</button>
         </div>
       </div>
 

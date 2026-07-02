@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How To Get Your Spotify Client ID</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background:  #0d0d0d;
+      color:       #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size:   14px;
+      line-height: 1.6;
+      padding:     48px 20px 64px;
+    }
+
+    .container {
+      max-width: 660px;
+      margin:    0 auto;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align:    center;
+      margin-bottom: 48px;
+    }
+
+    .spotify-mark {
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size:     22px;
+      font-weight:   700;
+      color:         #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color:     rgba(255, 255, 255, 0.45);
+      font-size: 13px;
+    }
+
+    /* ── Steps ── */
+    .steps {
+      display:        flex;
+      flex-direction: column;
+      gap:            36px;
+    }
+
+    .step {
+      display: flex;
+      gap:     16px;
+    }
+
+    .step-num {
+      flex-shrink:     0;
+      width:           28px;
+      height:          28px;
+      border-radius:   50%;
+      background:      #1DB954;
+      color:           #000000;
+      font-size:       12px;
+      font-weight:     700;
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+      margin-top:      2px;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-body h3 {
+      font-size:     14px;
+      font-weight:   600;
+      color:         #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .step-body p {
+      color:         rgba(255, 255, 255, 0.60);
+      font-size:     13px;
+      margin-bottom: 10px;
+    }
+
+    .step-body a {
+      color:           #1DB954;
+      text-decoration: none;
+    }
+
+    .step-body a:hover { text-decoration: underline; }
+
+    /* ── Code snippet ── */
+    .code {
+      display:       inline-block;
+      background:    rgba(255, 255, 255, 0.07);
+      border:        1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 5px;
+      padding:       4px 10px;
+      font-family:   'Consolas', 'Monaco', monospace;
+      font-size:     12px;
+      color:         #1DB954;
+      margin-bottom: 10px;
+    }
+
+    /* ── Note ── */
+    .note {
+      background:    rgba(29, 185, 84, 0.07);
+      border:        1px solid rgba(29, 185, 84, 0.18);
+      border-radius: 7px;
+      padding:       9px 13px;
+      font-size:     12px;
+      color:         rgba(255, 255, 255, 0.65);
+      margin-bottom: 10px;
+    }
+
+    .note strong { color: #1DB954; }
+
+    /* ── Copy row ── */
+    .code-row {
+      display:     flex;
+      align-items: center;
+      gap:         8px;
+      margin-bottom: 10px;
+    }
+
+    .code-row .code { margin-bottom: 0; }
+
+    .copy-btn {
+      display:       flex;
+      align-items:   center;
+      gap:           4px;
+      background:    rgba(255, 255, 255, 0.07);
+      border:        1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 5px;
+      color:         rgba(255, 255, 255, 0.55);
+      font-size:     11px;
+      padding:       4px 8px;
+      cursor:        pointer;
+      font-family:   inherit;
+      transition:    background 0.15s, color 0.15s;
+      white-space:   nowrap;
+      flex-shrink:   0;
+    }
+
+    .copy-btn:hover { background: rgba(255,255,255,0.13); color: #fff; }
+    .copy-btn.copied { color: #1DB954; border-color: rgba(29,185,84,0.35); }
+
+    /* ── Screenshot ── */
+    .screenshot {
+      width:         100%;
+      border-radius: 10px;
+      overflow:      hidden;
+      border:        1px solid rgba(255, 255, 255, 0.07);
+      background:    #1a1a1a;
+      min-height:    100px;
+    }
+
+    .screenshot img {
+      width:   100%;
+      display: block;
+    }
+
+    /* Shown when the image file is missing */
+    .screenshot .placeholder {
+      display:         none;
+      align-items:     center;
+      justify-content: center;
+      min-height:      120px;
+      color:           rgba(255, 255, 255, 0.18);
+      font-size:       12px;
+      text-align:      center;
+      padding:         24px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="spotify-mark">
+      <svg viewBox="0 0 24 24" fill="#1DB954" width="44" height="44">
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12
+          0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141
+          -.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6
+          11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3
+          -3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12
+          -1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12
+          -3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601
+          .18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419
+          1.56-.299.421-1.02.599-1.559.3z"/>
+      </svg>
+    </div>
+    <h1>How To Get Your Spotify Client ID</h1>
+    <p class="subtitle">Create a free Spotify Developer App in about 2 minutes.</p>
+  </header>
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Go to the Spotify Developer Dashboard</h3>
+        <p>Visit <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a> and log in with your Spotify account.</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Click "Create App"</h3>
+        <p>You should see a <strong style="color:#fff">Create App</strong> button on the dashboard. If you land on a Documentation or Community page instead, check that the URL ends with <span class="code">/dashboard</span>.</p>
+        <div class="screenshot">
+          <img src="images/1.png" alt="Dashboard with Create App button">
+          <div class="placeholder">📸 images/1.png — Dashboard showing Create App button</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Fill in a name and description</h3>
+        <p>Enter any name, description and website (optional) — for example <em>"Dynamic Island"</em>. These are just labels for your own reference.</p>
+        <div class="screenshot">
+          <img src="images/2.png" alt="Create App form">
+          <div class="placeholder">📸 images/2.png — Create App form with name and description</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Add the Redirect URI</h3>
+        <p>Under <strong style="color:#fff">Redirect URIs</strong>, add the exact url below. Then, click "Add".</p>
+        <div class="code-row">
+          <span class="code">http://127.0.0.1:8888/callback</span>
+          <button class="copy-btn" data-copy="http://127.0.0.1:8888/callback" title="Copy">
+            <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="5" width="8" height="8" rx="1.5"/>
+              <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+            </svg>
+            <span class="copy-label">Copy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Select Web API</h3>
+        <p>Under <strong style="color:#fff">"Which API/SDKs are you planning to use?"</strong>, check <strong style="color:#fff">Web API</strong>.</p>
+        <div class="screenshot">
+          <img src="images/3.png" alt="Web API checkbox">
+          <div class="placeholder">📸 images/3.png — API/SDKs selection with Web API checked</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Save, then copy your Client ID</h3>
+        <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the Dynamic Island setup prompt.</p>
+        <div class="note"><strong>Tip:</strong> The Client ID is not a secret — it is safe to copy and share.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Show placeholder div when an image file is missing
+  document.querySelectorAll('.screenshot img').forEach(function (img) {
+    img.onerror = function () {
+      this.style.display = 'none';
+      var ph = this.parentElement.querySelector('.placeholder');
+      if (ph) ph.style.display = 'flex';
+    };
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+        var label = btn.querySelector('.copy-label');
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copy';
+        }, 2000);
+      });
+    });
+  });
+</script>
+</body>
+</html>

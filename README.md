@@ -10,7 +10,7 @@ A Windows 10/11 overlay that mimics the iPhone Dynamic Island — a sleek dark p
 
 ```
         ╭──────────────────────────────╮
-        │  ▁▃▅▃▁  Blinding Lights      │
+        │  ▁▃▅▃▁  Blinding Lights     │
         ╰──────────────────────────────╯
 ```
 
@@ -70,15 +70,16 @@ spotify-windows-dynamic-island/
 
 You need a free Spotify Developer App to get a Client ID. This takes about 2 minutes.
 
-1. Go to **[developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)** and log in
-2. Click **Create App**
-3. Give it any name and description (e.g. "Dynamic Island")
+1. Go to **[developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)** and log in.
+2. Click **Create App**. If you don't see this option, make sure you are at the correct website with the /dashboard.
+3. Give it any name, description and website (e.g. "Dynamic Island")
 4. Under **Redirect URIs**, add exactly:
    ```
-   http://localhost:8888/callback
+   http://127.0.0.1:8888/callback
    ```
-5. Click **Save**
-6. On the app's page, copy your **Client ID**
+5. Under **Which API/SDKs are you planning to use?**, select **Web API**
+6. Click **Save**
+7. On the app's page, copy your **Client ID**
 
 > The Client ID is not a secret — it is safe to share. No Client Secret is required.
 
@@ -161,7 +162,7 @@ The installer is output to the `dist/` folder. Run the `.exe` to install the app
 - Controlling playback requires a **Spotify Premium** account
 
 **Authentication fails**
-- Double-check that `http://localhost:8888/callback` is listed exactly in your Spotify App's Redirect URIs
+- Double-check that `http://127.0.0.1:8888/callback` is listed exactly in your Spotify App's Redirect URIs
 - Make sure nothing else is using port 8888 when you authenticate
 
 **Island is behind other windows**
