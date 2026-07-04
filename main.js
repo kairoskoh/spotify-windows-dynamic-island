@@ -190,7 +190,7 @@ function startAuth() {
     code_challenge:        pkceChallenge(codeVerifier),
     state,
     scope:                 SCOPES,
-    show_dialog:           'false'
+    show_dialog:           'true'
   });
 
   shell.openExternal(`https://accounts.spotify.com/authorize?${params}`);
@@ -428,12 +428,13 @@ function registerIPC() {
     let token = store.get('accessToken');
     if (!token || !trackId) return;
     const method = saved ? 'DELETE' : 'PUT';
+    const body   = { ids: [trackId] };
     try {
-      await spotifyRequest(method, `/v1/me/tracks?ids=${trackId}`, null, token);
+      await spotifyRequest(method, '/v1/me/tracks', body, token);
     } catch (err) {
       if (err?.status === 401) {
         const t = await doRefreshToken();
-        if (t) await spotifyRequest(method, `/v1/me/tracks?ids=${trackId}`, null, t);
+        if (t) await spotifyRequest(method, '/v1/me/tracks', body, t);
       }
     }
   });
