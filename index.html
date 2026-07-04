@@ -453,7 +453,7 @@
       </details>
 
       <!-- Setup Guide -->
-      <details>
+      <details id="setup-guide">
         <summary>Setup Guide — How To Get Your Spotify Client ID</summary>
         <div class="detail-inner">
           <p class="guide-subtitle">Create a free Spotify Developer App in about 2 minutes.</p>
@@ -580,6 +580,15 @@
 </footer>
 
 <script>
+  // Auto-open and scroll to a details element if its id matches the URL hash
+  if (window.location.hash) {
+    var target = document.querySelector(window.location.hash);
+    if (target && target.tagName === 'DETAILS') {
+      target.open = true;
+      setTimeout(function () { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+    }
+  }
+
   // Placeholder fallback for screenshots
   document.querySelectorAll('.screenshot img').forEach(function (img) {
     img.onerror = function () {

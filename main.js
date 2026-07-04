@@ -414,7 +414,7 @@ function registerIPC() {
   ipcMain.on('start-auth', startAuth);
 
   ipcMain.on('quit-app',   () => app.quit());
-  ipcMain.on('open-guide', () => shell.openExternal('https://kairoskoh.github.io/spotify-windows-dynamic-island/'));
+  ipcMain.on('open-guide', () => shell.openExternal('https://kairoskoh.github.io/spotify-windows-dynamic-island/#setup-guide'));
 
   ipcMain.handle('get-position', () => store.get('windowPosition') || 'top');
   ipcMain.on('set-position', (_, pos) => {
