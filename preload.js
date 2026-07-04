@@ -22,6 +22,10 @@ contextBridge.exposeInMainWorld('spotify', {
   // Window mouse-event passthrough control
   setIgnoreMouse: (ignore, opts) => ipcRenderer.send('set-ignore-mouse', ignore, opts),
 
+  // Library
+  checkSaved:  (id)         => ipcRenderer.invoke('check-saved', id),
+  toggleSave:  (id, saved)  => ipcRenderer.send('toggle-save', id, saved),
+
   // App-level actions
   quitApp:     ()    => ipcRenderer.send('quit-app'),
   openGuide:   ()    => ipcRenderer.send('open-guide'),

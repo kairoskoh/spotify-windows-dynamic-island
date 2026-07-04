@@ -18,6 +18,7 @@ const timeTotal     = document.getElementById('time-total');
 const playPauseBtn  = document.getElementById('btn-play-pause');
 const prevBtn       = document.getElementById('btn-prev');
 const nextBtn       = document.getElementById('btn-next');
+const likeBtn       = document.getElementById('btn-like');
 
 const clientIdInput  = document.getElementById('client-id-input');
 const btnConnect     = document.getElementById('btn-connect');
@@ -38,6 +39,8 @@ const positionToggle = document.getElementById('position-toggle');
 let currentData   = null;
 let isExpanded    = false;
 let inUserSetup   = false; // true when user manually opened setup; blocks poll from switching back
+let isSaved       = false;
+let lastTrackId   = '';
 
 // Progress interpolation between 1-second API polls
 let interpMs        = 0;
@@ -186,6 +189,13 @@ playPauseBtn.addEventListener('click', () => {
 prevBtn.addEventListener('click', () => window.spotify.command('prev'));
 nextBtn.addEventListener('click', () => window.spotify.command('next'));
 
+likeBtn.addEventListener('click', () => {
+  if (!currentData?.trackId) return;
+  window.spotify.toggleSave(currentData.trackId, isSaved);
+  isSaved = !isSaved;
+  likeBtn.classList.toggle('liked', isSaved);
+});
+
 // ── UI sync helpers ───────────────────────────────────────────────────────────
 function syncPlayPauseBtn(playing) {
   playPauseBtn.classList.toggle('playing', playing);
@@ -212,6 +222,9 @@ function applyPlaybackData(data) {
 
     syncWaveform(false, true);
     collapsedTitle.textContent = 'No active device';
+    lastTrackId = '';
+    isSaved = false;
+    likeBtn.classList.remove('liked');
     trackNameEl.textContent    = '—';
     artistNameEl.textContent   = '—';
     timeCurrent.textContent    = '0:00';
@@ -223,7 +236,18 @@ function applyPlaybackData(data) {
     return;
   }
 
-  const { isPlaying, trackName, artistName, albumArtUrl, progressMs, durationMs } = data;
+  const { isPlaying, trackId, trackName, artistName, albumArtUrl, progressMs, durationMs } = data;
+
+  // Check liked state when track changes
+  if (trackId && trackId !== lastTrackId) {
+    lastTrackId = trackId;
+    isSaved = false;
+    likeBtn.classList.remove('liked');
+    window.spotify.checkSaved(trackId).then(saved => {
+      isSaved = saved;
+      likeBtn.classList.toggle('liked', saved);
+    });
+  }
 
   // Sync waveform
   syncWaveform(isPlaying, false);

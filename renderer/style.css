@@ -196,7 +196,14 @@ html, body {
 }
 
 /* ── Track meta ───────────────────────────────────────────────────────────── */
-.track-meta { min-width: 0; }
+.track-meta {
+  display:     flex;
+  align-items: center;
+  min-width:   0;
+  gap:         4px;
+}
+
+.track-info { flex: 1; min-width: 0; }
 
 .track-name {
   color:          #ffffff;
@@ -324,6 +331,13 @@ html, body {
 
 .play-btn.playing .icon-play  { display: none;  }
 .play-btn.playing .icon-pause { display: block; }
+
+/* Like button */
+.like-btn { color: rgba(255, 255, 255, 0.38); padding: 4px; }
+.like-btn .icon-heart-filled { display: none; }
+.like-btn.liked               { color: #1DB954; }
+.like-btn.liked .icon-heart-empty  { display: none;  }
+.like-btn.liked .icon-heart-filled { display: block; }
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Setup panel

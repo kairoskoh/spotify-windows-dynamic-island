@@ -28,7 +28,9 @@ const REDIRECT_URI  = `http://127.0.0.1:${REDIRECT_PORT}/callback`;
 const SCOPES        = [
   'user-read-playback-state',
   'user-read-currently-playing',
-  'user-modify-playback-state'
+  'user-modify-playback-state',
+  'user-library-read',
+  'user-library-modify'
 ].join(' ');
 
 // ── Tray icon: programmatically generate a 16×16 Spotify-green circle PNG ────
@@ -412,6 +414,29 @@ function registerIPC() {
   });
 
   ipcMain.on('start-auth', startAuth);
+
+  ipcMain.handle('check-saved', async (_, trackId) => {
+    const token = store.get('accessToken');
+    if (!token || !trackId) return false;
+    try {
+      const res = await spotifyRequest('GET', `/v1/me/tracks/contains?ids=${trackId}`, null, token);
+      return Array.isArray(res.body) ? res.body[0] : false;
+    } catch { return false; }
+  });
+
+  ipcMain.on('toggle-save', async (_, trackId, saved) => {
+    let token = store.get('accessToken');
+    if (!token || !trackId) return;
+    const method = saved ? 'DELETE' : 'PUT';
+    try {
+      await spotifyRequest(method, `/v1/me/tracks?ids=${trackId}`, null, token);
+    } catch (err) {
+      if (err?.status === 401) {
+        const t = await doRefreshToken();
+        if (t) await spotifyRequest(method, `/v1/me/tracks?ids=${trackId}`, null, t);
+      }
+    }
+  });
 
   ipcMain.on('quit-app',   () => app.quit());
   ipcMain.on('open-guide', () => shell.openExternal('https://kairoskoh.github.io/spotify-windows-dynamic-island/#setup-guide'));
