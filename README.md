@@ -68,8 +68,9 @@ A Windows 10/11 overlay that mimics the iPhone Dynamic Island — a sleek dark p
 ## Requirements
 
 - **Windows 10 or 11**
-- **Node.js** (v18 or later) — [nodejs.org](https://nodejs.org)
-- **A Spotify account** (free or Premium — playback control requires Premium)
+- **Spotify Premium** — the Spotify Web API used by this app does not work on the free plan
+- **Spotify Desktop or Spotify Web** (recommended) — must be running on any device; WinIsland can also control Spotify playing on your phone or other devices on the same account
+- **Node.js** (v18 or later) for running from source — [nodejs.org](https://nodejs.org)
 
 ---
 
@@ -209,3 +210,9 @@ The installer is output to the `dist/` folder. Run the `.exe` to install the app
 ## License
 
 MIT
+
+---
+
+## Author
+
+Created by [Kairos Koh](https://www.linkedin.com/in/kairoskoh/). For any feedback, drop me a message!

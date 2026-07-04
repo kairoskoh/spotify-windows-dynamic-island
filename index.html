@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinIsland — Spotify Dynamic Island for Windows</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%231DB954'/%3E%3Ctext x='16' y='22' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='%23000' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background:  #0d0d0d;
+      color:       #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size:   14px;
+      line-height: 1.6;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 700px;
+      margin:    0 auto;
+      padding:   0 20px;
+    }
+
+    section { padding: 64px 0; }
+    section + section { border-top: 1px solid rgba(255,255,255,0.06); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding:    80px 0 64px;
+    }
+
+    .logo-mark {
+      display:         inline-flex;
+      align-items:     center;
+      justify-content: center;
+      width:           64px;
+      height:          64px;
+      border-radius:   50%;
+      background:      #1DB954;
+      font-size:       32px;
+      font-weight:     700;
+      color:           #000;
+      margin-bottom:   20px;
+    }
+
+    .hero h1 {
+      font-size:     40px;
+      font-weight:   800;
+      color:         #ffffff;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero .tagline {
+      font-size:   16px;
+      color:       rgba(255,255,255,0.45);
+      max-width:   420px;
+      margin:      0 auto 10px;
+    }
+
+    .hero .disclaimer {
+      font-size: 11px;
+      color:     rgba(255,255,255,0.22);
+      margin-top: 6px;
+    }
+
+    /* ── Demo GIF ── */
+    .demo { padding: 0 0 64px; text-align: center; }
+
+    .demo-frame {
+      display:       inline-block;
+      border-radius: 16px;
+      overflow:      hidden;
+      border:        1px solid rgba(255,255,255,0.08);
+      background:    #141414;
+      max-width:     100%;
+    }
+
+    .demo-frame img {
+      display:   block;
+      max-width: 100%;
+      height:    auto;
+    }
+
+    .demo-placeholder {
+      width:   560px;
+      max-width: 100%;
+      height:  200px;
+      display: flex;
+      flex-direction: column;
+      align-items:    center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.18);
+      font-size: 13px;
+    }
+
+    .demo-placeholder .demo-icon { font-size: 28px; }
+
+    /* ── Download ── */
+    .download { text-align: center; }
+
+    .download h2 {
+      font-size:     22px;
+      font-weight:   700;
+      color:         #fff;
+      margin-bottom: 8px;
+    }
+
+    .download .sub {
+      color:         rgba(255,255,255,0.40);
+      font-size:     13px;
+      margin-bottom: 28px;
+    }
+
+    .download-btn {
+      display:         inline-flex;
+      align-items:     center;
+      gap:             10px;
+      background:      #1DB954;
+      color:           #000;
+      font-size:       15px;
+      font-weight:     700;
+      padding:         14px 32px;
+      border-radius:   50px;
+      text-decoration: none;
+      transition:      background 0.15s, transform 0.1s;
+    }
+
+    .download-btn:hover  { background: #1ed760; transform: translateY(-1px); }
+    .download-btn:active { transform: translateY(0); }
+
+    .download-btn svg { flex-shrink: 0; }
+
+    .platform-note {
+      margin-top: 14px;
+      font-size:  12px;
+      color:      rgba(255,255,255,0.28);
+    }
+
+    /* ── Requirements ── */
+    .requirements h2 {
+      font-size:     18px;
+      font-weight:   700;
+      color:         #fff;
+      margin-bottom: 20px;
+    }
+
+    .req-list {
+      display:        flex;
+      flex-direction: column;
+      gap:            12px;
+      list-style:     none;
+    }
+
+    .req-list li {
+      display:       flex;
+      align-items:   flex-start;
+      gap:           12px;
+      background:    rgba(255,255,255,0.04);
+      border:        1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding:       14px 16px;
+      font-size:     13px;
+      color:         rgba(255,255,255,0.65);
+    }
+
+    .req-list li .req-icon {
+      font-size:  18px;
+      flex-shrink: 0;
+      margin-top:  1px;
+    }
+
+    .req-list li strong { color: #fff; display: block; margin-bottom: 2px; }
+
+    .req-list li .tag {
+      display:       inline-block;
+      background:    rgba(29,185,84,0.12);
+      border:        1px solid rgba(29,185,84,0.25);
+      color:         #1DB954;
+      font-size:     10px;
+      font-weight:   600;
+      border-radius: 4px;
+      padding:       1px 6px;
+      margin-left:   6px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Guide accordion ── */
+    .guide h2 {
+      font-size:     18px;
+      font-weight:   700;
+      color:         #fff;
+      margin-bottom: 16px;
+    }
+
+    details {
+      background:    rgba(255,255,255,0.03);
+      border:        1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow:      hidden;
+    }
+
+    summary {
+      display:     flex;
+      align-items: center;
+      justify-content: space-between;
+      padding:     18px 20px;
+      cursor:      pointer;
+      font-size:   14px;
+      font-weight: 600;
+      color:       #fff;
+      user-select: none;
+      list-style:  none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content:    '›';
+      font-size:  20px;
+      color:      rgba(255,255,255,0.35);
+      transform:  rotate(90deg);
+      transition: transform 0.2s;
+      line-height: 1;
+    }
+
+    details[open] summary::after { transform: rotate(270deg); }
+
+    .guide-inner {
+      padding:    0 20px 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .guide-subtitle {
+      color:     rgba(255,255,255,0.40);
+      font-size: 12px;
+      margin:    16px 0 24px;
+    }
+
+    /* ── Steps (inside accordion) ── */
+    .steps {
+      display:        flex;
+      flex-direction: column;
+      gap:            30px;
+    }
+
+    .step { display: flex; gap: 16px; }
+
+    .step-num {
+      flex-shrink:     0;
+      width:           28px;
+      height:          28px;
+      border-radius:   50%;
+      background:      #1DB954;
+      color:           #000;
+      font-size:       12px;
+      font-weight:     700;
+      display:         flex;
+      align-items:     center;
+      justify-content: center;
+      margin-top:      2px;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-body h3 {
+      font-size:     14px;
+      font-weight:   600;
+      color:         #fff;
+      margin-bottom: 6px;
+    }
+
+    .step-body p {
+      color:         rgba(255,255,255,0.55);
+      font-size:     13px;
+      margin-bottom: 10px;
+    }
+
+    .step-body a            { color: #1DB954; text-decoration: none; }
+    .step-body a:hover      { text-decoration: underline; }
+
+    .code {
+      display:       inline-block;
+      background:    rgba(255,255,255,0.07);
+      border:        1px solid rgba(255,255,255,0.10);
+      border-radius: 5px;
+      padding:       3px 8px;
+      font-family:   'Consolas', 'Monaco', monospace;
+      font-size:     12px;
+      color:         #1DB954;
+      margin-bottom: 10px;
+    }
+
+    .note {
+      background:    rgba(29,185,84,0.07);
+      border:        1px solid rgba(29,185,84,0.18);
+      border-radius: 7px;
+      padding:       9px 13px;
+      font-size:     12px;
+      color:         rgba(255,255,255,0.65);
+      margin-bottom: 10px;
+    }
+
+    .note strong { color: #1DB954; }
+
+    .code-row {
+      display:       flex;
+      align-items:   center;
+      gap:           8px;
+      margin-bottom: 10px;
+    }
+
+    .code-row .code { margin-bottom: 0; }
+
+    .copy-btn {
+      display:       flex;
+      align-items:   center;
+      gap:           4px;
+      background:    rgba(255,255,255,0.07);
+      border:        1px solid rgba(255,255,255,0.12);
+      border-radius: 5px;
+      color:         rgba(255,255,255,0.55);
+      font-size:     11px;
+      padding:       4px 8px;
+      cursor:        pointer;
+      font-family:   inherit;
+      transition:    background 0.15s, color 0.15s;
+      white-space:   nowrap;
+      flex-shrink:   0;
+    }
+
+    .copy-btn:hover  { background: rgba(255,255,255,0.13); color: #fff; }
+    .copy-btn.copied { color: #1DB954; border-color: rgba(29,185,84,0.35); }
+
+    .screenshot {
+      width:         100%;
+      border-radius: 10px;
+      overflow:      hidden;
+      border:        1px solid rgba(255,255,255,0.07);
+      background:    #1a1a1a;
+      min-height:    60px;
+    }
+
+    .screenshot img   { width: 100%; display: block; }
+
+    .screenshot .placeholder {
+      display:         none;
+      align-items:     center;
+      justify-content: center;
+      min-height:      100px;
+      color:           rgba(255,255,255,0.18);
+      font-size:       12px;
+      text-align:      center;
+      padding:         20px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align:    center;
+      padding:       40px 20px 52px;
+      border-top:    1px solid rgba(255,255,255,0.06);
+      font-size:     13px;
+      color:         rgba(255,255,255,0.35);
+    }
+
+    footer a {
+      color:           #1DB954;
+      text-decoration: none;
+      font-weight:     600;
+    }
+
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<div class="container">
+  <div class="hero">
+    <div class="logo-mark">W</div>
+    <h1>WinIsland</h1>
+    <p class="tagline">A Spotify Dynamic Island for Windows — live playback controls in a sleek floating pill.</p>
+    <p class="disclaimer">Not affiliated with Spotify or Apple. Uses the Spotify Web API.</p>
+  </div>
+</div>
+
+<!-- ── Demo GIF ── -->
+<div class="container">
+  <div class="demo">
+    <div class="demo-frame">
+      <img src="demo.gif" alt="WinIsland demo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="demo-placeholder" style="display:none">
+        <span class="demo-icon">🎬</span>
+        <span>demo.gif — drop your screen recording here</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Download ── -->
+<div class="container">
+  <section class="download">
+    <h2>Download</h2>
+    <p class="sub">Windows 10 / 11 &nbsp;·&nbsp; Free &nbsp;·&nbsp; No install required</p>
+    <a class="download-btn" href="WinIsland.exe" download>
+      <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+        <path d="M10 2a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L9 12.586V3a1 1 0 0 1 1-1zM3 17a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H3z"/>
+      </svg>
+      Download WinIsland.exe
+    </a>
+    <p class="platform-note">Windows 10 / 11 · 64-bit</p>
+  </section>
+</div>
+
+<!-- ── Requirements ── -->
+<div class="container">
+  <section class="requirements">
+    <h2>Requirements</h2>
+    <ul class="req-list">
+      <li>
+        <span class="req-icon">🪟</span>
+        <div>
+          <strong>Windows 10 or 11</strong>
+          64-bit recommended
+        </div>
+      </li>
+      <li>
+        <span class="req-icon">🎵</span>
+        <div>
+          <strong>Spotify Premium <span class="tag">Required</span></strong>
+          The Spotify Web API used by WinIsland does not work on the free plan. Playback control requires Premium.
+        </div>
+      </li>
+      <li>
+        <span class="req-icon">💡</span>
+        <div>
+          <strong>Spotify Desktop or Spotify Web <span class="tag">Recommended</span></strong>
+          Spotify must be active on at least one device. Fun fact — WinIsland can also control Spotify playing on your phone or any other device on the same account!
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<!-- ── How to Get Client ID (accordion) ── -->
+<div class="container">
+  <section class="guide">
+    <h2>Setup Guide</h2>
+    <details>
+      <summary>How to get your Spotify Client ID</summary>
+      <div class="guide-inner">
+        <p class="guide-subtitle">Create a free Spotify Developer App in about 2 minutes.</p>
+        <div class="steps">
+
+          <!-- Step 1 -->
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Go to the Spotify Developer Dashboard</h3>
+              <p>Visit <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a> and log in with your Spotify account.</p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Click "Create App"</h3>
+              <p>You should see a <strong style="color:#fff">Create App</strong> button on the dashboard. If you land on a Documentation or Community page instead, check that the URL ends with <span class="code">/dashboard</span>.</p>
+              <div class="screenshot">
+                <img src="guide/images/1.png" alt="Dashboard with Create App button">
+                <div class="placeholder">📸 Dashboard showing Create App button</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Fill in a name and description</h3>
+              <p>Enter any name, description and website (optional) — for example <em>"Dynamic Island"</em>. These are just labels for your own reference.</p>
+              <div class="screenshot">
+                <img src="guide/images/2.png" alt="Create App form">
+                <div class="placeholder">📸 Create App form with name and description</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h3>Add the Redirect URI</h3>
+              <p>Under <strong style="color:#fff">Redirect URIs</strong>, add the exact URL below. Then click <strong style="color:#fff">Add</strong>.</p>
+              <div class="code-row">
+                <span class="code">http://127.0.0.1:8888/callback</span>
+                <button class="copy-btn" data-copy="http://127.0.0.1:8888/callback" title="Copy">
+                  <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="5" width="8" height="8" rx="1.5"/>
+                    <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+                  </svg>
+                  <span class="copy-label">Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h3>Select Web API</h3>
+              <p>Under <strong style="color:#fff">"Which API/SDKs are you planning to use?"</strong>, check <strong style="color:#fff">Web API</strong>.</p>
+              <div class="screenshot">
+                <img src="guide/images/3.png" alt="Web API checkbox">
+                <div class="placeholder">📸 API/SDKs selection with Web API checked</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="step">
+            <div class="step-num">6</div>
+            <div class="step-body">
+              <h3>Save, then copy your Client ID</h3>
+              <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the WinIsland setup prompt.</p>
+              <div class="note"><strong>Tip:</strong> The Client ID is not a secret — it is safe to copy and share.</div>
+              <div class="screenshot">
+                <img src="guide/images/4.png" alt="App page showing Client ID">
+                <div class="placeholder">📸 App page with Client ID</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 7 -->
+          <div class="step">
+            <div class="step-num">7</div>
+            <div class="step-body">
+              <h3>Approve the connection</h3>
+              <p>Your browser will open a Spotify authorisation page. Click <strong style="color:#fff">Agree</strong> to allow WinIsland to read your playback and control Spotify on your behalf.</p>
+              <div class="screenshot">
+                <img src="guide/images/5.png" alt="Spotify authorisation page">
+                <div class="placeholder">📸 Spotify Agree page</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 8 -->
+          <div class="step">
+            <div class="step-num">8</div>
+            <div class="step-body">
+              <h3>You're all set!</h3>
+              <p>The browser tab will close automatically and WinIsland will start showing your Spotify playback. You're good to go!</p>
+              <div class="screenshot">
+                <img src="guide/images/6.png" alt="WinIsland showing playback">
+                <div class="placeholder">📸 WinIsland connected and playing</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </details>
+  </section>
+</div>
+
+<!-- ── Footer ── -->
+<footer>
+  Created by <a href="https://www.linkedin.com/in/kairoskoh/" target="_blank">Kairos Koh</a>. For any feedback, drop me a message!
+</footer>
+
+<script>
+  // Placeholder fallback for screenshots
+  document.querySelectorAll('.screenshot img').forEach(function (img) {
+    img.onerror = function () {
+      this.style.display = 'none';
+      var ph = this.parentElement.querySelector('.placeholder');
+      if (ph) ph.style.display = 'flex';
+    };
+  });
+
+  // Copy buttons
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(btn.dataset.copy).then(function () {
+        var label = btn.querySelector('.copy-label');
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'Copy';
+        }, 2000);
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -414,7 +414,7 @@ function registerIPC() {
   ipcMain.on('start-auth', startAuth);
 
   ipcMain.on('quit-app',   () => app.quit());
-  ipcMain.on('open-guide', () => shell.openPath(path.join(__dirname, 'guide', 'index.html')));
+  ipcMain.on('open-guide', () => shell.openPath(path.join(__dirname, 'guide', 'setup-guide.html')));
 
   ipcMain.handle('get-position', () => store.get('windowPosition') || 'top');
   ipcMain.on('set-position', (_, pos) => {
