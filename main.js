@@ -28,9 +28,7 @@ const REDIRECT_URI  = `http://127.0.0.1:${REDIRECT_PORT}/callback`;
 const SCOPES        = [
   'user-read-playback-state',
   'user-read-currently-playing',
-  'user-modify-playback-state',
-  'user-library-read',
-  'user-library-modify'
+  'user-modify-playback-state'
 ].join(' ');
 
 // ── Tray icon: programmatically generate a 16×16 Spotify-green circle PNG ────
@@ -190,7 +188,7 @@ function startAuth() {
     code_challenge:        pkceChallenge(codeVerifier),
     state,
     scope:                 SCOPES,
-    show_dialog:           'true'
+    show_dialog:           'false'
   });
 
   shell.openExternal(`https://accounts.spotify.com/authorize?${params}`);
@@ -414,30 +412,6 @@ function registerIPC() {
   });
 
   ipcMain.on('start-auth', startAuth);
-
-  ipcMain.handle('check-saved', async (_, trackId) => {
-    const token = store.get('accessToken');
-    if (!token || !trackId) return false;
-    try {
-      const res = await spotifyRequest('GET', `/v1/me/tracks/contains?ids=${trackId}`, null, token);
-      return Array.isArray(res.body) ? res.body[0] : false;
-    } catch { return false; }
-  });
-
-  ipcMain.on('toggle-save', async (_, trackId, saved) => {
-    let token = store.get('accessToken');
-    if (!token || !trackId) return;
-    const method = saved ? 'DELETE' : 'PUT';
-    const body   = { ids: [trackId] };
-    try {
-      await spotifyRequest(method, '/v1/me/tracks', body, token);
-    } catch (err) {
-      if (err?.status === 401) {
-        const t = await doRefreshToken();
-        if (t) await spotifyRequest(method, '/v1/me/tracks', body, t);
-      }
-    }
-  });
 
   ipcMain.on('quit-app',   () => app.quit());
   ipcMain.on('open-guide', () => shell.openExternal('https://kairoskoh.github.io/spotify-windows-dynamic-island/#setup-guide'));
