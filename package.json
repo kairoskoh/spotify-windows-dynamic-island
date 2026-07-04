@@ -1,5 +1,5 @@
 {
-  "name": "spotify-dynamic-island",
+  "name": "spotisland",
   "version": "1.0.0",
   "description": "Dynamic Island-style Spotify overlay for Windows 10/11",
   "main": "main.js",
@@ -15,12 +15,14 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.dynamicisland.spotify",
-    "productName": "Spotify Dynamic Island",
+    "appId": "com.spotisland.app",
+    "productName": "SpotIsland",
     "directories": { "output": "dist" },
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": "nsis"
+    },
+    "nsis": {
+      "artifactName": "SpotIsland.exe"
     },
     "files": ["main.js", "preload.js", "renderer/**", "assets/**"]
   }

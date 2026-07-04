@@ -1,4 +1,4 @@
-# WinIsland: A Windows Dynamic Island for Spotify
+# SpotIsland: A Windows Dynamic Island for Spotify
 
 A Windows 10/11 overlay that mimics the iPhone Dynamic Island — a sleek dark pill that sits at the top-center (or bottom-center) of your screen and shows Spotify playback controls whenever music is playing. Disclaimer: This is not an official application by Spotify. This application makes use of Spotify API. Created using Claude Code.
 
@@ -69,7 +69,7 @@ A Windows 10/11 overlay that mimics the iPhone Dynamic Island — a sleek dark p
 
 - **Windows 10 or 11**
 - **Spotify Premium** — the Spotify Web API used by this app does not work on the free plan
-- **Spotify Desktop or Spotify Web** (recommended) — must be running on any device; WinIsland can also control Spotify playing on your phone or other devices on the same account
+- **Spotify Desktop or Spotify Web** (recommended) — must be running on any device; SpotIsland can also control Spotify playing on your phone or other devices on the same account
 - **Node.js** (v18 or later) for running from source — [nodejs.org](https://nodejs.org)
 
 ---

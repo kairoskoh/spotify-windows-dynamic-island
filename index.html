@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WinIsland — Spotify Dynamic Island for Windows</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%231DB954'/%3E%3Ctext x='16' y='22' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='%23000' text-anchor='middle'%3EW%3C/text%3E%3C/svg%3E">
+  <title>SpotIsland — Spotify Dynamic Island for Windows</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%231DB954'/%3E%3Ctext x='16' y='22' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='%23000' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -380,8 +380,8 @@
 <!-- ── Hero ── -->
 <div class="container">
   <div class="hero">
-    <div class="logo-mark">W</div>
-    <h1>WinIsland</h1>
+    <div class="logo-mark">S</div>
+    <h1>SpotIsland</h1>
     <p class="tagline">A Spotify Dynamic Island for Windows — live playback controls in a sleek floating pill.</p>
     <p class="disclaimer">Not affiliated with Spotify or Apple. Uses the Spotify Web API.</p>
   </div>
@@ -390,15 +390,15 @@
 <!-- ── Download + Demo GIF ── -->
 <div class="container">
   <div class="demo">
-    <a class="download-btn" href="WinIsland.exe" download>
+    <a class="download-btn" href="SpotIsland.exe" download>
       <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
         <path d="M10 2a1 1 0 0 1 1 1v9.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L9 12.586V3a1 1 0 0 1 1-1zM3 17a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H3z"/>
       </svg>
-      Download WinIsland.exe
+      Download SpotIsland.exe
     </a>
     <p class="platform-note">Windows 10 / 11 · 64-bit</p>
     <div class="demo-frame">
-      <img src="demo.gif" alt="WinIsland demo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img src="demo.gif" alt="SpotIsland demo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="demo-placeholder" style="display:none">
         <span class="demo-icon">🎬</span>
         <span>demo.gif — drop your screen recording here</span>
@@ -417,8 +417,8 @@
       <details>
         <summary>How It Works</summary>
         <div class="detail-inner how-it-works-text">
-          <p>WinIsland sits quietly at the top (or bottom) of your screen as a slim floating bar. When you hover over it, it smoothly expands to show your current Spotify track — album art, song name, artist, a progress bar, and playback controls. Move your mouse away and it shrinks back into a small pill. It always stays on top of everything else you have open, so it's there whenever you need it without getting in the way.</p>
-          <p>To pull your music info from Spotify, WinIsland connects to Spotify's official developer tools using a free personal key called a Client ID. Getting one takes about 2 minutes — the setup guide below walks you through it step by step. Once connected, WinIsland checks Spotify every second to keep your track info and progress bar up to date, and it handles staying logged in automatically in the background. No tinkering required after the first setup.</p>
+          <p>SpotIsland sits quietly at the top (or bottom) of your screen as a slim floating bar. When you hover over it, it smoothly expands to show your current Spotify track — album art, song name, artist, a progress bar, and playback controls. Move your mouse away and it shrinks back into a small pill. It always stays on top of everything else you have open, so it's there whenever you need it without getting in the way.</p>
+          <p>To pull your music info from Spotify, SpotIsland connects to Spotify's official developer tools using a free personal key called a Client ID. Getting one takes about 2 minutes — the setup guide below walks you through it step by step. Once connected, SpotIsland checks Spotify every second to keep your track info and progress bar up to date, and it handles staying logged in automatically in the background. No tinkering required after the first setup.</p>
         </div>
       </details>
 
@@ -438,14 +438,14 @@
               <span class="req-icon">🎵</span>
               <div>
                 <strong>Spotify Premium <span class="tag">Required</span></strong>
-                The Spotify Web API used by WinIsland does not work on the free plan. Playback control requires Premium.
+                The Spotify Web API used by SpotIsland does not work on the free plan. Playback control requires Premium.
               </div>
             </li>
             <li>
               <span class="req-icon">💡</span>
               <div>
                 <strong>Spotify Desktop or Spotify Web <span class="tag">Recommended</span></strong>
-                Spotify must be active on at least one device. Fun fact — WinIsland can also control Spotify playing on your phone or any other device on the same account!
+                Spotify must be active on at least one device. Fun fact — SpotIsland can also control Spotify playing on your phone or any other device on the same account!
               </div>
             </li>
           </ul>
@@ -531,7 +531,7 @@
               <div class="step-num">6</div>
               <div class="step-body">
                 <h3>Save, then copy your Client ID</h3>
-                <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the WinIsland setup prompt.</p>
+                <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the SpotIsland setup prompt.</p>
                 <div class="note"><strong>Tip:</strong> The Client ID is not a secret — it is safe to copy and share.</div>
                 <div class="screenshot">
                   <img src="guide/images/4.png" alt="App page showing Client ID">
@@ -545,7 +545,7 @@
               <div class="step-num">7</div>
               <div class="step-body">
                 <h3>Approve the connection</h3>
-                <p>Your browser will open a Spotify authorisation page. Click <strong style="color:#fff">Agree</strong> to allow WinIsland to read your playback and control Spotify on your behalf.</p>
+                <p>Your browser will open a Spotify authorisation page. Click <strong style="color:#fff">Agree</strong> to allow SpotIsland to read your playback and control Spotify on your behalf.</p>
                 <div class="screenshot">
                   <img src="guide/images/5.png" alt="Spotify authorisation page">
                   <div class="placeholder">📸 Spotify Agree page</div>
@@ -558,10 +558,10 @@
               <div class="step-num">8</div>
               <div class="step-body">
                 <h3>You're all set!</h3>
-                <p>The browser tab will close automatically and WinIsland will start showing your Spotify playback. You're good to go!</p>
+                <p>The browser tab will close automatically and SpotIsland will start showing your Spotify playback. You're good to go!</p>
                 <div class="screenshot">
-                  <img src="guide/images/6.png" alt="WinIsland showing playback">
-                  <div class="placeholder">📸 WinIsland connected and playing</div>
+                  <img src="guide/images/6.png" alt="SpotIsland showing playback">
+                  <div class="placeholder">📸 SpotIsland connected and playing</div>
                 </div>
               </div>
             </div>
