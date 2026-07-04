@@ -141,13 +141,33 @@
       color:      rgba(255,255,255,0.28);
     }
 
-    /* ── Requirements ── */
-    .requirements h2 {
+    /* ── Details section ── */
+    .details h2 {
       font-size:     18px;
       font-weight:   700;
       color:         #fff;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
+
+    .accordion {
+      display:        flex;
+      flex-direction: column;
+      gap:            8px;
+    }
+
+    .detail-inner {
+      padding:    20px 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .how-it-works-text p {
+      color:         rgba(255,255,255,0.55);
+      font-size:     13px;
+      line-height:   1.75;
+      margin-bottom: 12px;
+    }
+
+    .how-it-works-text p:last-child { margin-bottom: 0; }
 
     .req-list {
       display:        flex;
@@ -190,14 +210,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* ── Guide accordion ── */
-    .guide h2 {
-      font-size:     18px;
-      font-weight:   700;
-      color:         #fff;
-      margin-bottom: 16px;
-    }
-
     details {
       background:    rgba(255,255,255,0.03);
       border:        1px solid rgba(255,255,255,0.08);
@@ -231,15 +243,10 @@
 
     details[open] summary::after { transform: rotate(270deg); }
 
-    .guide-inner {
-      padding:    0 20px 28px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
     .guide-subtitle {
       color:     rgba(255,255,255,0.40);
       font-size: 12px;
-      margin:    16px 0 24px;
+      margin:    0 0 20px;
     }
 
     /* ── Steps (inside accordion) ── */
@@ -417,156 +424,170 @@
   </section>
 </div>
 
-<!-- ── Requirements ── -->
+<!-- ── Details ── -->
 <div class="container">
-  <section class="requirements">
-    <h2>Requirements</h2>
-    <ul class="req-list">
-      <li>
-        <span class="req-icon">🪟</span>
-        <div>
-          <strong>Windows 10 or 11</strong>
-          64-bit recommended
+  <section class="details">
+    <h2>Details</h2>
+    <div class="accordion">
+
+      <!-- How It Works -->
+      <details>
+        <summary>How It Works</summary>
+        <div class="detail-inner how-it-works-text">
+          <p>WinIsland sits quietly at the top (or bottom) of your screen as a slim floating bar. When you hover over it, it smoothly expands to show your current Spotify track — album art, song name, artist, a progress bar, and playback controls. Move your mouse away and it shrinks back into a small pill. It always stays on top of everything else you have open, so it's there whenever you need it without getting in the way.</p>
+          <p>To pull your music info from Spotify, WinIsland connects to Spotify's official developer tools using a free personal key called a Client ID. Getting one takes about 2 minutes — the setup guide below walks you through it step by step. Once connected, WinIsland checks Spotify every second to keep your track info and progress bar up to date, and it handles staying logged in automatically in the background. No tinkering required after the first setup.</p>
         </div>
-      </li>
-      <li>
-        <span class="req-icon">🎵</span>
-        <div>
-          <strong>Spotify Premium <span class="tag">Required</span></strong>
-          The Spotify Web API used by WinIsland does not work on the free plan. Playback control requires Premium.
+      </details>
+
+      <!-- Requirements -->
+      <details>
+        <summary>Requirements</summary>
+        <div class="detail-inner">
+          <ul class="req-list">
+            <li>
+              <span class="req-icon">🪟</span>
+              <div>
+                <strong>Windows 10 or 11</strong>
+                64-bit recommended
+              </div>
+            </li>
+            <li>
+              <span class="req-icon">🎵</span>
+              <div>
+                <strong>Spotify Premium <span class="tag">Required</span></strong>
+                The Spotify Web API used by WinIsland does not work on the free plan. Playback control requires Premium.
+              </div>
+            </li>
+            <li>
+              <span class="req-icon">💡</span>
+              <div>
+                <strong>Spotify Desktop or Spotify Web <span class="tag">Recommended</span></strong>
+                Spotify must be active on at least one device. Fun fact — WinIsland can also control Spotify playing on your phone or any other device on the same account!
+              </div>
+            </li>
+          </ul>
         </div>
-      </li>
-      <li>
-        <span class="req-icon">💡</span>
-        <div>
-          <strong>Spotify Desktop or Spotify Web <span class="tag">Recommended</span></strong>
-          Spotify must be active on at least one device. Fun fact — WinIsland can also control Spotify playing on your phone or any other device on the same account!
+      </details>
+
+      <!-- Setup Guide -->
+      <details>
+        <summary>Setup Guide — How To Get Your Spotify Client ID</summary>
+        <div class="detail-inner">
+          <p class="guide-subtitle">Create a free Spotify Developer App in about 2 minutes.</p>
+          <div class="steps">
+
+            <!-- Step 1 -->
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h3>Go to the Spotify Developer Dashboard</h3>
+                <p>Visit <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a> and log in with your Spotify account.</p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h3>Click "Create App"</h3>
+                <p>You should see a <strong style="color:#fff">Create App</strong> button on the dashboard. If you land on a Documentation or Community page instead, check that the URL ends with <span class="code">/dashboard</span>.</p>
+                <div class="screenshot">
+                  <img src="guide/images/1.png" alt="Dashboard with Create App button">
+                  <div class="placeholder">📸 Dashboard showing Create App button</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h3>Fill in a name and description</h3>
+                <p>Enter any name, description and website (optional) — for example <em>"Dynamic Island"</em>. These are just labels for your own reference.</p>
+                <div class="screenshot">
+                  <img src="guide/images/2.png" alt="Create App form">
+                  <div class="placeholder">📸 Create App form with name and description</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <h3>Add the Redirect URI</h3>
+                <p>Under <strong style="color:#fff">Redirect URIs</strong>, add the exact URL below. Then click <strong style="color:#fff">Add</strong>.</p>
+                <div class="code-row">
+                  <span class="code">http://127.0.0.1:8888/callback</span>
+                  <button class="copy-btn" data-copy="http://127.0.0.1:8888/callback" title="Copy">
+                    <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="5" y="5" width="8" height="8" rx="1.5"/>
+                      <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
+                    </svg>
+                    <span class="copy-label">Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <h3>Select Web API</h3>
+                <p>Under <strong style="color:#fff">"Which API/SDKs are you planning to use?"</strong>, check <strong style="color:#fff">Web API</strong>.</p>
+                <div class="screenshot">
+                  <img src="guide/images/3.png" alt="Web API checkbox">
+                  <div class="placeholder">📸 API/SDKs selection with Web API checked</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <h3>Save, then copy your Client ID</h3>
+                <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the WinIsland setup prompt.</p>
+                <div class="note"><strong>Tip:</strong> The Client ID is not a secret — it is safe to copy and share.</div>
+                <div class="screenshot">
+                  <img src="guide/images/4.png" alt="App page showing Client ID">
+                  <div class="placeholder">📸 App page with Client ID</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step">
+              <div class="step-num">7</div>
+              <div class="step-body">
+                <h3>Approve the connection</h3>
+                <p>Your browser will open a Spotify authorisation page. Click <strong style="color:#fff">Agree</strong> to allow WinIsland to read your playback and control Spotify on your behalf.</p>
+                <div class="screenshot">
+                  <img src="guide/images/5.png" alt="Spotify authorisation page">
+                  <div class="placeholder">📸 Spotify Agree page</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 8 -->
+            <div class="step">
+              <div class="step-num">8</div>
+              <div class="step-body">
+                <h3>You're all set!</h3>
+                <p>The browser tab will close automatically and WinIsland will start showing your Spotify playback. You're good to go!</p>
+                <div class="screenshot">
+                  <img src="guide/images/6.png" alt="WinIsland showing playback">
+                  <div class="placeholder">📸 WinIsland connected and playing</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </li>
-    </ul>
-  </section>
-</div>
+      </details>
 
-<!-- ── How to Get Client ID (accordion) ── -->
-<div class="container">
-  <section class="guide">
-    <h2>Setup Guide</h2>
-    <details>
-      <summary>How to get your Spotify Client ID</summary>
-      <div class="guide-inner">
-        <p class="guide-subtitle">Create a free Spotify Developer App in about 2 minutes.</p>
-        <div class="steps">
-
-          <!-- Step 1 -->
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <h3>Go to the Spotify Developer Dashboard</h3>
-              <p>Visit <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a> and log in with your Spotify account.</p>
-            </div>
-          </div>
-
-          <!-- Step 2 -->
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <h3>Click "Create App"</h3>
-              <p>You should see a <strong style="color:#fff">Create App</strong> button on the dashboard. If you land on a Documentation or Community page instead, check that the URL ends with <span class="code">/dashboard</span>.</p>
-              <div class="screenshot">
-                <img src="guide/images/1.png" alt="Dashboard with Create App button">
-                <div class="placeholder">📸 Dashboard showing Create App button</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3 -->
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <h3>Fill in a name and description</h3>
-              <p>Enter any name, description and website (optional) — for example <em>"Dynamic Island"</em>. These are just labels for your own reference.</p>
-              <div class="screenshot">
-                <img src="guide/images/2.png" alt="Create App form">
-                <div class="placeholder">📸 Create App form with name and description</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 4 -->
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <h3>Add the Redirect URI</h3>
-              <p>Under <strong style="color:#fff">Redirect URIs</strong>, add the exact URL below. Then click <strong style="color:#fff">Add</strong>.</p>
-              <div class="code-row">
-                <span class="code">http://127.0.0.1:8888/callback</span>
-                <button class="copy-btn" data-copy="http://127.0.0.1:8888/callback" title="Copy">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="5" y="5" width="8" height="8" rx="1.5"/>
-                    <path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/>
-                  </svg>
-                  <span class="copy-label">Copy</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 5 -->
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-body">
-              <h3>Select Web API</h3>
-              <p>Under <strong style="color:#fff">"Which API/SDKs are you planning to use?"</strong>, check <strong style="color:#fff">Web API</strong>.</p>
-              <div class="screenshot">
-                <img src="guide/images/3.png" alt="Web API checkbox">
-                <div class="placeholder">📸 API/SDKs selection with Web API checked</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 6 -->
-          <div class="step">
-            <div class="step-num">6</div>
-            <div class="step-body">
-              <h3>Save, then copy your Client ID</h3>
-              <p>Click <strong style="color:#fff">Save</strong>. On your new app's page, copy the <strong style="color:#fff">Client ID</strong> — a long string of letters and numbers. Paste it into the WinIsland setup prompt.</p>
-              <div class="note"><strong>Tip:</strong> The Client ID is not a secret — it is safe to copy and share.</div>
-              <div class="screenshot">
-                <img src="guide/images/4.png" alt="App page showing Client ID">
-                <div class="placeholder">📸 App page with Client ID</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 7 -->
-          <div class="step">
-            <div class="step-num">7</div>
-            <div class="step-body">
-              <h3>Approve the connection</h3>
-              <p>Your browser will open a Spotify authorisation page. Click <strong style="color:#fff">Agree</strong> to allow WinIsland to read your playback and control Spotify on your behalf.</p>
-              <div class="screenshot">
-                <img src="guide/images/5.png" alt="Spotify authorisation page">
-                <div class="placeholder">📸 Spotify Agree page</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 8 -->
-          <div class="step">
-            <div class="step-num">8</div>
-            <div class="step-body">
-              <h3>You're all set!</h3>
-              <p>The browser tab will close automatically and WinIsland will start showing your Spotify playback. You're good to go!</p>
-              <div class="screenshot">
-                <img src="guide/images/6.png" alt="WinIsland showing playback">
-                <div class="placeholder">📸 WinIsland connected and playing</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </details>
+    </div>
   </section>
 </div>
 
